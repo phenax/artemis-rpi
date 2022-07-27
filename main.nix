@@ -12,4 +12,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
   services.timesyncd.enable = true;
   documentation.nixos.enable = false;
+  nix.gc = { automatic = true; dates = "weekly"; };
+  # nix.settings.auto-optimise-store = true;
+  system.stateVersion = "21.11";
 }
