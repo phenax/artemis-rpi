@@ -18,7 +18,9 @@ build-native: .PHONY
 		-I nixos-config=./installer/default.nix \
 		-I nixpkgs=$(INSTALLER_CHANNEL_NIXPKGS) \
 		--argstr system aarch64-linux \
-		--option sandbox false
+		--option sandbox false;
+	mkdir -p ./output;
+	cp -rf ./result/* ./output/;
 
 setup-nixpkgs: .PHONY
 	@if [ ! -d $(INSTALLER_CHANNEL_NIXPKGS) ]; then \
@@ -32,10 +34,11 @@ setup-qemu: .PHONY
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
 DEV = /dev/sda
+OUTDIR = ./output
 burn: .PHONY
-	@echo "Burning image $(shell ls ./output/sd-image/*.img | head -n 1)...";
+	@echo "Burning image $(shell ls $(OUTDIR)/sd-image/*.img | head -n 1)...";
 	sudo dd \
-		if="$(shell ls ./output/sd-image/*.img | head -n 1)" \
+		if="$(shell ls $(OUTDIR)/sd-image/*.img | head -n 1)" \
 		of="$(DEV)" \
 		bs=4096 conv=fsync status=progress;
 

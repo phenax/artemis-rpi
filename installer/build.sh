@@ -2,7 +2,6 @@
 
 mkdir -p ./output;
 
-make build-native && \
-  cp -rf -L result/* ./output/;
+make build-native;
 
 ls -la result;

@@ -12,17 +12,27 @@
     compressImage = false;
 
     populateRootCommands = ''
-      echo "--------------------------------------------------------";
-      echo "-------------- Replacing firmware files ----------------";
-      echo "--------------------------------------------------------";
+      echo "-------------- Replacing firmware files... ----------------";
       mkdir -p ./files/boot;
-      cp -r ${./bootfiles}/* ./files/boot;
-      echo "--------------------------------------------------------";
+      cp -r ${./firmware}/* ./files/boot;
+      echo "";
+      echo "------------------- Copying config... ---------------------";
+      mkdir -p ./files/etc/nixos/config;
+      cp -r \
+        `ls -A -d ${./..}/* | grep -E -v '/(nixpkgs|output|result)$'` \
+        ./files/etc/nixos/config/;
+      echo "-----------------------------------------------------------";
     '';
   };
 
   boot = {
-    initrd.availableKernelModules = [ "uas" "sdhci_pci" "xhci_pci" "usbhid" "usb_storage" ];
+    initrd.availableKernelModules = [
+      "uas"
+      "sdhci_pci"
+      "xhci_pci"
+      "usbhid"
+      "usb_storage"
+    ];
 
     kernelParams = [
       "8250.nr_uarts=1"
