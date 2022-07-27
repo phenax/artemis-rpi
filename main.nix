@@ -3,8 +3,8 @@
   imports = [
     ./modules/hardware.nix
     ./modules/network.nix
-    ./modules/programs.nix
     ./modules/users.nix
+    ./modules/programs/_default.nix
   ];
 
   # Core

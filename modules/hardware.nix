@@ -14,7 +14,13 @@ in
 
   boot = {
     initrd.availableKernelModules = [ "uas" "sdhci_pci" "xhci_pci" "usbhid" "usb_storage" ];
-
+    blacklistedKernelModules = [
+      "btqca"
+      "btsdio"
+      "hci_uart"
+      "btbcm"
+      "bluetooth"
+    ];
     kernelParams = [
       "8250.nr_uarts=1"
       "console=ttyS0,115200n8"
@@ -24,6 +30,8 @@ in
 
     loader.grub.enable = false;
     loader.generic-extlinux-compatible.enable = true;
+
+    cleanTmpDir = true;
   };
 
   swapDevices = [ ];

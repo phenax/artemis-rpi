@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  ports = import ../ports.nix;
   secrets = import ../secrets.nix;
 in
 {

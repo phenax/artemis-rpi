@@ -1,8 +1,11 @@
 { config, lib, pkgs, ... }:
 {
+  importa = [
+    ./pihole.nix
+  ];
+
   services.sshd.enable = true;
   systemd.services.sshd.wantedBy = lib.mkOverride 40 [ "multi-user.target" ];
-  services.openssh.permitRootLogin = "yes";
 
   programs.neovim = {
     enable = true;

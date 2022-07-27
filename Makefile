@@ -18,8 +18,8 @@ build-native: .PHONY
 		-I nixos-config=./installer/default.nix \
 		-I nixpkgs=$(INSTALLER_CHANNEL_NIXPKGS) \
 		--argstr system aarch64-linux \
-		--option sandbox false;
-	mkdir -p ./output;
+		--option sandbox false && \
+	mkdir -p ./output && \
 	cp -rf ./result/* ./output/;
 
 setup-nixpkgs: .PHONY
