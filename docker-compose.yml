@@ -5,4 +5,4 @@ services:
       context: .
       dockerfile: installer/Dockerfile
     volumes:
-      - ./output:/build/output
+      - ./output:/opt/output
