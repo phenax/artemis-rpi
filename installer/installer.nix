@@ -19,7 +19,7 @@
       echo "------------------- Copying config... ---------------------";
       mkdir -p ./files/etc/nixos/config;
       cp -r \
-        `ls -A -d ${./..}/* | grep -E -v '/(nixpkgs|output|result)$'` \
+        `ls -A -d ${./..}/{*,.*} | grep -E -v '/(nixpkgs|output|result)$'` \
         ./files/etc/nixos/config/;
       echo "-----------------------------------------------------------";
     '';
@@ -50,7 +50,12 @@
     requires = [ "network-online.target" ];
 
     restartIfChanged = false;
+    stopIfChanged = false;
     unitConfig.X-StopOnRemoval = false;
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
 
     script =
       let
@@ -77,23 +82,18 @@
       in
       ''#!${pkgs.runtimeShell} -eu
 
-        export PATH=${path}:$PATH
-        export NIX_PATH=nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels
+        export PATH=${path}:$PATH;
+        export NIX_PATH=nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos:nixos-config=/etc/nixos/configuration.nix:/nix/var/nix/profiles/per-user/root/channels;
 
         nixos-generate-config;
-        cp ${configurationFile} /etc/nixos/configuration.nix
+        cp ${configurationFile} /etc/nixos/configuration.nix;
 
         if [ -f /etc/nixos/channels ]; then
-          cp /etc/nixos/config/channels /root/.nix-channels
+          cp /etc/nixos/config/channels /root/.nix-channels;
           nix-channel --update;
         fi;
 
         nixos-rebuild switch;
       '';
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
   };
 }
