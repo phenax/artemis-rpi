@@ -4,7 +4,7 @@ Nixos image builder and server configuration for my raspberry pi 4 server
 
 ## Build an installer img
 
-* Copy secrets.example.nix to secrets.nix and configure the values
+* Copy `secrets.example.nix` to secrets.nix and configure the values
 * Run `make build` to build a new server img file in output/sd-image
 * Run `make burn DEV=/dev/sdX` to burn the image onto a usb drive or sd card (for device /dev/sdX)
 
