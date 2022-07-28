@@ -1,7 +1,8 @@
 { config, lib, pkgs, ... }:
 {
-  importa = [
+  imports = [
     ./pihole.nix
+    ./syncthing.nix
   ];
 
   services.sshd.enable = true;
