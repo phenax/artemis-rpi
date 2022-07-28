@@ -22,6 +22,9 @@ build-native: .PHONY
 	mkdir -p ./output && \
 	cp -rf ./result/* ./output/;
 
+test-config: .PHONY
+	NIXOS_CONFIG="$(shell pwd)/test.nix" nixos-rebuild dry-build
+
 setup-nixpkgs: .PHONY
 	@if [ ! -d $(INSTALLER_CHANNEL_NIXPKGS) ]; then \
 		git clone --depth=1 \

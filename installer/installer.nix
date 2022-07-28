@@ -18,8 +18,8 @@
       echo "";
       echo "------------------- Copying config... ---------------------";
       mkdir -p ./files/etc/nixos/config;
-      cp -r \
-        `ls -A -d ${./..}/{*,.*} | grep -E -v '/(nixpkgs|output|result)$'` \
+      cp -rf \
+        `find ${./..} -maxdepth 1 -mindepth 1` \
         ./files/etc/nixos/config/;
       echo "-----------------------------------------------------------";
     '';
